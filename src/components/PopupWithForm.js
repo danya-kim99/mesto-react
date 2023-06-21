@@ -8,6 +8,7 @@ function PopupWithForm(props) {
         <button
           type="button"
           className={`popup__close-button popup__close-button_${props.name}`}
+          onClick={props.onClose}
         />
         <form className={`popup__form" name="popup__form_type_${props.name}`}>
           {props.children}

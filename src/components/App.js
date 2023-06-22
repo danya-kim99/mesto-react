@@ -5,7 +5,6 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import { api } from "../utils/Api";
 import ImagePopup from "./ImagePopup";
-import Card from "./Card";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -24,7 +23,6 @@ function App() {
       .getProfileInfo()
       .then((data) => {
         setUserData(data)
-        console.log(userData)
       })
       .catch((error) => {
         console.error(error);
@@ -79,17 +77,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           userData={userData}
-        >
-          <section className="elements">
-            <div className="spinner"></div>
-            {cards.map((card) => (
-              <Card
-                card={card}
-                onCardClick={handleCardClick}
-              />
-            ))}
-          </section>
-        </Main>
+          cards={cards}
+          onCardClick={setSelectedCard}
+        />
         <Footer />
         <ImagePopup card={selectedCard} isOpen={selectedCard} onClose={closeAllPopups} />
         <PopupWithForm

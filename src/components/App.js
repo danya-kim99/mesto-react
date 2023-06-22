@@ -10,26 +10,21 @@ import Card from "./Card";
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
-  const [isImageProfilePopupOpen, setIsImageProfilePopupOpen] =
-    React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
   const [isSubmitDeletionPopupOpen, setIsSubmitDeletionPopupOpen] =
     React.useState(false);
-  const [userAvatar, setUserAvatar] = React.useState(null);
-  const [userName, setUserName] = React.useState(null);
-  const [userDescription, setUserDescription] = React.useState(null);
+  const [userData, setUserData] = React.useState(null);
   const [cards, setCards] = React.useState([]);
-  const [selectedCard, setSelectedCard] = React.useState([]);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   React.useEffect(() => {
     api
       .getProfileInfo()
       .then((data) => {
-        setUserName(data.name);
-        setUserDescription(data.about);
-        setUserAvatar(data.avatar);
+        setUserData(data)
+        console.log(userData)
       })
       .catch((error) => {
         console.error(error);
@@ -48,32 +43,31 @@ function App() {
   }, []);
 
   function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
+    setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
-    setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
+    setIsAddPlacePopupOpen(true);
   }
 
   function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+    setIsEditAvatarPopupOpen(true);
   }
 
   function handleSubmitDeletionClick() {
-    setIsSubmitDeletionPopupOpen(!isSubmitDeletionPopupOpen);
+    setIsSubmitDeletionPopupOpen(true);
   }
 
   function closeAllPopups() {
     setIsAddPlacePopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setIsImageProfilePopupOpen(false);
+    setSelectedCard(null)
   }
 
   function handleCardClick(item) {
     console.log(item)
     setSelectedCard(item)
-    setIsImageProfilePopupOpen(!isImageProfilePopupOpen)
   }
 
   return (
@@ -84,26 +78,20 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
-          userName={userName}
-          userDescription={userDescription}
-          userAvatar={userAvatar}
+          userData={userData}
         >
           <section className="elements">
             <div className="spinner"></div>
             {cards.map((card) => (
               <Card
                 card={card}
-                key={card._id}
-                link={card.link}
-                name={card.name}
-                likes={card.likes}
                 onCardClick={handleCardClick}
               />
             ))}
           </section>
         </Main>
         <Footer />
-        <ImagePopup card={selectedCard} link={selectedCard.link} isOpen={isImageProfilePopupOpen} onClose={closeAllPopups} />
+        <ImagePopup card={selectedCard} isOpen={selectedCard} onClose={closeAllPopups} />
         <PopupWithForm
           name="profile"
           title="Редактировать профиль"

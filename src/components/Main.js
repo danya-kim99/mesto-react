@@ -38,7 +38,7 @@ function Main({ userData, cards, onEditProfile, onAddPlace, onEditAvatar, onCard
         <section className="elements">
           <div className="spinner"></div>
           {cards.map((card) => (
-            <Card card={card} onCardClick={onCardClick} />
+            <Card card={card} onCardClick={onCardClick} key={card._id}/>
           ))}
         </section>
       </section>

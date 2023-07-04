@@ -51,7 +51,7 @@ class Api {
       })
       .then(res => {
         return this._getResponseData(res, 'Не удалось удалить карточку.')
-      });;
+      });
   }
 
   putLike(id) {
@@ -63,7 +63,7 @@ class Api {
       })
       .then(res => {
         return this._getResponseData(res, 'Не удалось поставить лайк.')
-      });;
+      });
   }
 
   deleteLike(id) {
@@ -76,6 +76,12 @@ class Api {
       .then(res => {
         return this._getResponseData(res, 'Не удалось удалить лайк.')
       });
+  }
+
+  changeLikeCardStatus(id, isLiked) {
+    return isLiked
+    ? this.deleteLike(id)
+    : this.putLike(id)
   }
 
   getProfileInfo() {

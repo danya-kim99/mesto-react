@@ -1,7 +1,9 @@
 import React from "react";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main({ userData, cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
+function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike }) {
+  const currentUser = React.useContext(CurrentUserContext);
   return (
     <main className="main">
       <section className="profile">
@@ -9,14 +11,14 @@ function Main({ userData, cards, onEditProfile, onAddPlace, onEditAvatar, onCard
           className="profile__avatar"
           style={{
             backgroundImage: `url(${
-              userData ? userData.avatar : "Загружаем..."
+              currentUser ? currentUser.avatar : "Загружаем..."
             })`,
           }}
           onClick={onEditAvatar}
         />
         <div className="profile__info">
           <h1 className="profile__name">
-            {userData ? userData.name : "Вы прекрасны"}
+            {currentUser ? currentUser.name : "Вы прекрасны"}
           </h1>
           <button
             type="button"
@@ -24,7 +26,7 @@ function Main({ userData, cards, onEditProfile, onAddPlace, onEditAvatar, onCard
             onClick={onEditProfile}
           />
           <p className="profile__profession">
-            {userData ? userData.about : "Загружаем..."}
+            {currentUser ? currentUser.about : "Загружаем..."}
           </p>
         </div>
         <button
@@ -38,7 +40,7 @@ function Main({ userData, cards, onEditProfile, onAddPlace, onEditAvatar, onCard
         <section className="elements">
           <div className="spinner"></div>
           {cards.map((card) => (
-            <Card card={card} onCardClick={onCardClick} key={card._id}/>
+            <Card card={card} onCardClick={onCardClick} onCardLike={onCardLike} key={card._id}/>
           ))}
         </section>
       </section>

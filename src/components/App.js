@@ -75,11 +75,12 @@ function App() {
   }
 
   function handleCardDelete(card) {
+    console.log(card)
     api
-      .deleteCard()
+      .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((c) => {
-          if (c._id === card._id) {
+          if (c._id !== card._id) {
             return c
           }
         }))
@@ -98,6 +99,7 @@ function App() {
             cards={cards}
             onCardClick={setSelectedCard}
             onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
           />
           <Footer />
           <ImagePopup card={selectedCard} isOpen={selectedCard} onClose={closeAllPopups} />

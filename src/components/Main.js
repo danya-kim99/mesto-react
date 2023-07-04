@@ -2,7 +2,7 @@ import React from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike }) {
+function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
   return (
     <main className="main">
@@ -40,7 +40,7 @@ function Main({ cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onC
         <section className="elements">
           <div className="spinner"></div>
           {cards.map((card) => (
-            <Card card={card} onCardClick={onCardClick} onCardLike={onCardLike} key={card._id}/>
+            <Card card={card} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} key={card._id}/>
           ))}
         </section>
       </section>

@@ -5,7 +5,8 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import { api } from "../utils/Api";
 import ImagePopup from "./ImagePopup";
-import EditPopupProfile from "./EditPopupProfile";
+import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
@@ -97,6 +98,15 @@ function App() {
       })
   }
 
+  function handleUpdateAvatar(link) {
+    api
+      .patchProfileAvatar(link)
+      .then((newCurrenUser) => {
+        setCurrentUser(newCurrenUser);
+        closeAllPopups();
+      })
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -113,10 +123,15 @@ function App() {
           />
           <Footer />
           <ImagePopup card={selectedCard} isOpen={selectedCard} onClose={closeAllPopups} />
-          <EditPopupProfile
+          <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
+          />
+          <EditAvatarPopup
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar}
           />
           <PopupWithForm
             name="place"
@@ -152,23 +167,6 @@ function App() {
             isOpen={isSubmitDeletionPopupOpen}
             buttonTitle="Да"
           />
-          <PopupWithForm
-            name="avatar"
-            title="Обновить аватар"
-            isOpen={isEditAvatarPopupOpen}
-            buttonTitle="Сохранить"
-            onClose={closeAllPopups}
-          >
-            <input
-              id="avatar-link-input"
-              name="link"
-              className="popup__input popup__input_type_link"
-              type="url"
-              placeholder="Ссылка на изображение"
-              required=""
-            />
-            <span className="popup__input-error avatar-link-input-error" />
-          </PopupWithForm>
         </>
       </div>
     </CurrentUserContext.Provider>

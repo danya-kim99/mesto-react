@@ -1,7 +1,7 @@
 import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function EditPopupProfile({
+function EditProfilePopup({
     isOpen,
     onClose,
     onUpdateUser
@@ -77,4 +77,4 @@ function EditPopupProfile({
     );
 }
 
-export default EditPopupProfile;
+export default EditProfilePopup;

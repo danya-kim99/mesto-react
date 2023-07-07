@@ -8,7 +8,7 @@ function EditAvatarPopup({
     const avatarRef = useRef();
     
     function handleChangeAvatar(e) {
-        avatarRef.current = e.target.value
+        avatarRef.current.value = e.target.value
     }
 
     function handleSubmit(e) {
@@ -18,6 +18,10 @@ function EditAvatarPopup({
             link: avatarRef.current
         });
     }
+
+    React.useEffect(() => {
+        avatarRef.current.value = ''
+    }, [isOpen]);
 
     return (
         <div className={`popup popup_type_avatar ${isOpen ? "popup_opened" : ""}`}>
@@ -30,13 +34,13 @@ function EditAvatarPopup({
                 />
                 <form onSubmit={handleSubmit} className={'popup__form" name="popup__form_type_avatar'}>
                     <input
+                        ref={avatarRef}
                         id="avatar-link-input"
                         name="link"
                         className="popup__input popup__input_type_link"
                         type="url"
                         placeholder="Ссылка на изображение"
                         required=""
-                        value={avatarRef.current}
                         onChange={handleChangeAvatar}
                     />
                     <span className="popup__input-error avatar-link-input-error" />

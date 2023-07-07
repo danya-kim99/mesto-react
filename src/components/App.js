@@ -74,7 +74,10 @@ function App() {
       .changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   function handleCardDelete(card) {
@@ -88,6 +91,9 @@ function App() {
           }
         }))
       })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   function handleUpdateUser(formData) {
@@ -96,6 +102,9 @@ function App() {
       .then((newCurrenUser) => {
         setCurrentUser(newCurrenUser);
         closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
       })
   }
 
@@ -106,6 +115,9 @@ function App() {
         setCurrentUser(newCurrenUser);
         closeAllPopups();
       })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   function handleAddCard(card) {
@@ -114,6 +126,9 @@ function App() {
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
       })
   }
 
